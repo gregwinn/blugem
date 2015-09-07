@@ -33,7 +33,11 @@ module Blugem
 
     def self.test
       # => Return authToken
-      return @authToken
+      if @authToken
+        return @authToken
+      else
+        return false
+      end
     end
 
     def self.version
