@@ -16,6 +16,7 @@ module Blugem
         {:username => AUTH_INFO["username"], :password => AUTH_INFO["password"]}.to_json,
         :content_type => :json,
         :accept => :json
+      @cookie = r.cookies["X-BZ-AuthToken"]
       @authToken = JSON.parse(r.body)["authToken"]
       return @authToken
     end
@@ -24,10 +25,11 @@ module Blugem
       request = RestClient.post
     end
 
-    def self.get_request(path, options = {})
+    def self.get_request(path)
       return RestClient.get "#{@@API_URL}#{path}",
-        {:cookies =>
-          {:"X-BZ-AuthToken" => @authToken}
+        {:accept => :json,
+         :cookies =>
+            {:"X-BZ-AuthToken" => @authToken}
         }
     end
 
